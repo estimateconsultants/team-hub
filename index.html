@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EC Team Workspace</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b0b0c">
+<meta name="color-scheme" content="light">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/png" href="/icons/favicon.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="EC Team">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f5f3ee; --cream-2:#ece8de; --paper:#ffffff;
+    --ink:#0b0b0c; --ink-2:#1e1e21; --ink-3:#36373b; --muted:#6b6a66;
+    --line:#e2ddd1; --gold-1:#7a5c26; --gold-2:#c5a46d; --gold-soft:#f3ead9;
+    --gold:linear-gradient(135deg,var(--gold-1) 0%,var(--gold-2) 100%);
+    --radius:12px; --shadow:0 1px 2px rgba(11,11,12,.05),0 8px 24px rgba(11,11,12,.06);
+    --serif:"Cormorant Garamond",Georgia,serif; --sans:Archivo,"Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--cream);color:var(--ink-2);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer}
+
+  /* ---------- top bar ---------- */
+  .bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;
+       padding:10px 20px;padding-top:max(10px,env(safe-area-inset-top));
+       background:var(--ink);color:#f5f3ee;border-bottom:1px solid rgba(197,164,109,.35)}
+  .brand{display:flex;align-items:center;gap:12px;min-width:0;cursor:pointer;background:none;border:0;color:inherit;padding:0}
+  .brand img{width:40px;height:40px;border-radius:8px;object-fit:cover}
+  .brand b{display:block;font-family:var(--serif);font-weight:600;font-size:20px;letter-spacing:.06em;text-transform:uppercase;line-height:1}
+  .brand small{display:block;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-2);margin-top:4px}
+  .tabs{display:flex;gap:6px;margin-left:18px;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{white-space:nowrap;border:1px solid transparent;background:transparent;color:#d9d4c8;
+       padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:8px}
+  .tab svg{width:15px;height:15px}
+  .tab:hover{color:#fff;border-color:rgba(197,164,109,.35)}
+  .tab.on{background:var(--gold);color:#fff;border-color:transparent}
+  .spacer{flex:1}
+  .tool{border:1px solid rgba(245,243,238,.18);background:transparent;color:#f5f3ee;border-radius:8px;
+        padding:8px 12px;font-size:12.5px;display:none;align-items:center;gap:7px}
+  .tool svg{width:14px;height:14px}
+  .tool:hover{border-color:var(--gold-2);color:var(--gold-2)}
+  body.in-app .tool{display:flex}
+
+  /* ---------- home ---------- */
+  #home{max-width:1120px;margin:0 auto;padding:36px 20px 64px}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.22em;
+           text-transform:uppercase;color:var(--gold-1);background:var(--gold-soft);padding:6px 12px;border-radius:999px}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,52px);line-height:1.05;margin:14px 0 6px;color:var(--ink)}
+  h1 em{font-style:italic;background:var(--gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{color:var(--muted);font-size:15px;margin:0 0 30px}
+  h2{font-family:var(--serif);font-weight:600;font-size:24px;margin:34px 0 14px;color:var(--ink);display:flex;align-items:center;gap:12px}
+  h2::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+  .app{position:relative;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+       padding:22px 22px 20px;box-shadow:var(--shadow);transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;
+       display:flex;flex-direction:column;gap:10px;min-height:180px;color:var(--ink-2)}
+  .app:hover{transform:translateY(-2px);border-color:var(--gold-2);box-shadow:0 2px 4px rgba(11,11,12,.06),0 14px 34px rgba(122,92,38,.14)}
+  .app:focus-visible,.link:focus-visible,.tab:focus-visible,.btn:focus-visible{outline:2px solid var(--gold-2);outline-offset:2px}
+  .app .ic{width:46px;height:46px;border-radius:10px;background:var(--ink);display:grid;place-items:center;color:var(--gold-2)}
+  .app .ic svg{width:22px;height:22px}
+  .app b{font-family:var(--serif);font-size:24px;font-weight:600;color:var(--ink);line-height:1.1}
+  .app p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5;flex:1}
+  .app .go{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.12em;
+           text-transform:uppercase;color:var(--gold-1)}
+  .app .go svg{width:14px;height:14px;transition:transform .15s}
+  .app:hover .go svg{transform:translateX(3px)}
+  .app.feature{background:var(--ink);border-color:var(--ink);color:#e9e4d8}
+  .app.feature b{color:#f5f3ee}
+  .app.feature p{color:#b9b3a6}
+  .app.feature .ic{background:var(--gold);color:#fff}
+  .app.feature .go{color:var(--gold-2)}
+
+  .links{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+  .link{display:flex;align-items:center;gap:12px;background:var(--paper);border:1px solid var(--line);border-radius:10px;
+        padding:12px 14px;font-size:14px;font-weight:500;transition:border-color .15s,background .15s}
+  .link:hover{border-color:var(--gold-2);background:#fffdf8}
+  .link .li{width:32px;height:32px;border-radius:8px;background:var(--cream-2);display:grid;place-items:center;color:var(--gold-1);flex:none}
+  .link .li svg{width:16px;height:16px}
+  .link span{flex:1;min-width:0}
+  .link small{display:block;color:var(--muted);font-weight:400;font-size:12px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .link .ext{width:14px;height:14px;color:#a9a397}
+
+  .tip{margin-top:34px;display:flex;gap:14px;align-items:flex-start;background:var(--paper);border:1px dashed var(--gold-2);
+       border-radius:var(--radius);padding:16px 18px;font-size:13.5px;color:var(--ink-3);line-height:1.55}
+  .tip svg{width:20px;height:20px;color:var(--gold-1);flex:none;margin-top:1px}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:8px;padding:10px 16px;font-weight:600;font-size:13px;
+       letter-spacing:.06em;text-transform:uppercase;background:var(--gold);color:#fff;box-shadow:0 4px 14px rgba(122,92,38,.25)}
+  .btn:hover{filter:brightness(1.05)}
+  .btn.ghost{background:transparent;color:var(--ink-2);border:1px solid var(--line);box-shadow:none}
+  #installBtn{display:none}
+  footer{margin-top:40px;text-align:center;font-size:12px;color:var(--muted)}
+
+  /* ---------- app frames ---------- */
+  #stage{display:none;position:fixed;left:0;right:0;bottom:0;top:var(--bar-h,61px);background:var(--cream)}
+  body.in-app #stage{display:block}
+  body.in-app #home{display:none}
+  #stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--cream);visibility:hidden}
+  #stage iframe.on{visibility:visible}
+  .loading{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;transition:opacity .3s}
+  .loading.hide{opacity:0}
+  .loading div{display:flex;flex-direction:column;align-items:center;gap:14px;color:var(--muted);font-size:13px}
+  .spin{width:34px;height:34px;border-radius:50%;border:3px solid var(--cream-2);border-top-color:var(--gold-1);animation:sp 0.9s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .help{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:#e9e4d8;border-radius:10px;
+        padding:10px 14px;font-size:12.5px;display:none;align-items:center;gap:10px;box-shadow:var(--shadow);max-width:calc(100% - 32px)}
+  .help.show{display:flex}
+  .help a{color:var(--gold-2);font-weight:600;white-space:nowrap}
+  .help button{background:none;border:0;color:#9c968a;font-size:16px;line-height:1;padding:0 2px}
+
+  @media (max-width:720px){
+    .bar{padding:10px 14px;gap:10px}
+    .brand small{display:none}
+    .brand b{font-size:15px;white-space:nowrap}
+  }
+  @media (max-width:420px){
+    .brand span{display:none}
+    .tabs{margin-left:4px}
+    .tab span{display:none}
+    .tab{padding:8px 10px}
+    .tool span{display:none}
+    #home{padding:26px 16px 48px}
+  }
+</style>
+</head>
+<body>
+
+<header class="bar" id="bar">
+  <button class="brand" id="homeBtn" title="Home">
+    <img src="/icons/icon-192.png" alt="">
+    <span><b>Estimate Consultants</b><small>Team Workspace</small></span>
+  </button>
+  <nav class="tabs" id="tabs"></nav>
+  <div class="spacer"></div>
+  <button class="tool" id="reloadBtn" title="Reload this app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg><span>Reload</span></button>
+  <button class="tool" id="popBtn" title="Open in its own window"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>New window</span></button>
+</header>
+
+<main id="home">
+  <span class="eyebrow">Employees only</span>
+  <h1 id="greet">Good day. <em>Let's get to work.</em></h1>
+  <p class="lede">Every Estimate Consultants tool in one place. Sign in with your @estimateconsultants.com Google account.</p>
+
+  <h2>Apps</h2>
+  <section class="apps" id="apps"></section>
+
+  <h2>Quick links</h2>
+  <section class="links" id="links"></section>
+
+  <div class="tip">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M11 18h2"/></svg>
+    <div>
+      <strong>Install this as an app.</strong> On a computer, click <em>Install</em> in Chrome or Edge's address bar (or the button here). On a phone, use <em>Share → Add to Home Screen</em> (iPhone) or <em>⋮ → Install app</em> (Android). It always opens the latest version, so there's nothing to update.
+      <div style="margin-top:12px"><button class="btn" id="installBtn">Install app</button></div>
+    </div>
+  </div>
+
+  <footer>Estimate Consultants · Internal use only</footer>
+</main>
+
+<section id="stage" aria-live="polite">
+  <div class="loading" id="loading"><div><div class="spin"></div><span id="loadingText">Opening…</span></div></div>
+  <div class="help" id="help">
+    <span>Blank screen? You may need to sign in to Google first.</span>
+    <a href="https://accounts.google.com/" target="_blank" rel="noopener">Sign in</a>
+    <a href="#" id="helpPop">Open in window</a>
+    <button id="helpX" aria-label="Dismiss">×</button>
+  </div>
+</section>
+
+<script>
+(function () {
+  // ------------------------------------------------------------------
+  // App list. To add or change an app, edit this list only.
+  // ------------------------------------------------------------------
+  var APPRAISAL = 'https://script.google.com/a/macros/estimateconsultants.com/s/AKfycbyVaMTnlWK4MFOLaBpPoAbIe7Jy4dQr3cCPSPeOGllFTQzkhUiVAKOyc2usnWcTRMRj/exec';
+  var SHOPS     = 'https://script.google.com/a/macros/estimateconsultants.com/s/AKfycby08jn8NRz--HhQCtssnCUeRNrQl-fZ3UpJoketo1NY_JnmFeey1H4DppnZeSGIaY2pOA/exec';
+
+  var I = {
+    car:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M3 13l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 8l2 5v4H3z"/><circle cx="7.5" cy="17" r="1.8"/><circle cx="16.5" cy="17" r="1.8"/></svg>',
+    rcpt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>',
+    shop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.6-.4-.4-2.6z"/></svg>',
+    sheet:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M4 15h16M10 3v18"/></svg>',
+    drive:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M8 3h8l6 10-4 7H6l-4-7z"/><path d="M8 3l6 10h8M2 13h12l-4 7"/></svg>',
+    cal:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+    mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>',
+    wave: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2v20M17 6.5c0-1.9-2.2-3-5-3s-5 1.3-5 3.3S9 9.6 12 10.4s5 1.6 5 3.6-2.2 3.5-5 3.5-5-1.2-5-3.2"/></svg>',
+    globe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>',
+    pen:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/></svg>',
+    door: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21h16M6 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17"/><circle cx="14.5" cy="12" r=".8" fill="currentColor"/></svg>',
+    arrow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+    ext:  '<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M9 7h8v8"/></svg>'
+  };
+
+  var APPS = [
+    { id: 'appraisals', name: 'Appraisals', icon: I.car, feature: true, url: APPRAISAL,
+      desc: 'Client files, intake, comps, reports, invoices, demand letters and the shared calendar.' },
+    { id: 'shops', name: 'Shop Office', icon: I.shop, url: SHOPS,
+      desc: 'Body shop claims, shop directory, discounts, stage updates and shop invoices.' },
+    { id: 'receipts', name: 'Receipts', icon: I.rcpt, url: APPRAISAL + '?app=receipts',
+      desc: 'Scan, review and file business receipts.' }
+  ];
+
+  var LINKS = [
+    { name: 'Appraisal Tracker', sub: 'Google Sheet', icon: I.sheet, url: 'https://docs.google.com/spreadsheets/d/1kEr00BZS-_GMTmvyyG_0xmLALCwBhB2NiILadR9ZrSg/edit' },
+    { name: 'Wave', sub: 'Invoices & payments', icon: I.wave, url: 'https://next.waveapps.com/' },
+    { name: 'Google Drive', sub: 'Client folders', icon: I.drive, url: 'https://drive.google.com/drive/my-drive' },
+    { name: 'Calendar', sub: 'Google Calendar', icon: I.cal, url: 'https://calendar.google.com/' },
+    { name: 'Gmail', sub: 'Company inbox', icon: I.mail, url: 'https://mail.google.com/' }
+  ];
+
+  // ------------------------------------------------------------------
+  var $ = function (id) { return document.getElementById(id); };
+  var body = document.body, frames = {}, current = null, helpTimer = null;
+
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+
+  var h = new Date().getHours();
+  $('greet').innerHTML = (h < 12 ? 'Good morning.' : h < 17 ? 'Good afternoon.' : 'Good evening.') + ' <em>Let’s get to work.</em>';
+
+  $('apps').innerHTML = APPS.map(function (a) {
+    return '<button class="app' + (a.feature ? ' feature' : '') + '" data-app="' + a.id + '">' +
+      '<span class="ic">' + a.icon + '</span><b>' + a.name + '</b><p>' + a.desc + '</p>' +
+      '<span class="go">Open ' + I.arrow + '</span></button>';
+  }).join('');
+
+  $('links').innerHTML = LINKS.map(function (l) {
+    return '<a class="link" href="' + l.url + '" target="_blank" rel="noopener"><span class="li">' + l.icon + '</span>' +
+      '<span>' + l.name + '<small>' + l.sub + '</small></span>' + I.ext + '</a>';
+  }).join('');
+
+  $('tabs').innerHTML = APPS.map(function (a) {
+    return '<button class="tab" data-app="' + a.id + '" title="' + a.name + '">' + a.icon + '<span>' + a.name + '</span></button>';
+  }).join('');
+
+  function setBarHeight() { document.documentElement.style.setProperty('--bar-h', $('bar').offsetHeight + 'px'); }
+  setBarHeight(); window.addEventListener('resize', setBarHeight);
+
+  function appById(id) { for (var i = 0; i < APPS.length; i++) if (APPS[i].id === id) return APPS[i]; return null; }
+
+  function open(id, push) {
+    var a = appById(id); if (!a) return;
+    current = a;
+    body.classList.add('in-app');
+    document.title = a.name + ' · EC Team';
+    [].forEach.call(document.querySelectorAll('.tab'), function (t) { t.classList.toggle('on', t.getAttribute('data-app') === id); });
+    Object.keys(frames).forEach(function (k) { frames[k].classList.toggle('on', k === id); });
+    $('help').classList.remove('show');
+    clearTimeout(helpTimer);
+    if (!frames[id]) {
+      // Each app is loaded once and kept open, so switching back is instant.
+      $('loading').classList.remove('hide');
+      $('loadingText').textContent = 'Opening ' + a.name + '…';
+      var f = document.createElement('iframe');
+      f.src = a.url;
+      f.title = a.name;
+      f.setAttribute('allow', 'clipboard-read; clipboard-write; camera; microphone; fullscreen');
+      f.addEventListener('load', function () {
+        if (current && current.id === id) $('loading').classList.add('hide');
+      });
+      frames[id] = f;
+      $('stage').insertBefore(f, $('loading'));
+      f.classList.add('on');
+      helpTimer = setTimeout(function () { if (current && current.id === id) $('help').classList.add('show'); }, 9000);
+    } else {
+      $('loading').classList.add('hide');
+    }
+    store('ec_last_app', id);
+    if (push !== false) history.pushState({ app: id }, '', '#' + id);
+  }
+
+  function goHome(push) {
+    current = null;
+    body.classList.remove('in-app');
+    document.title = 'EC Team Workspace';
+    [].forEach.call(document.querySelectorAll('.tab'), function (t) { t.classList.remove('on'); });
+    $('help').classList.remove('show');
+    store('ec_last_app', '');
+    if (push !== false) history.pushState({}, '', location.pathname);
+  }
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-app]');
+    if (b) { open(b.getAttribute('data-app')); }
+  });
+  $('homeBtn').onclick = function () { goHome(); };
+  $('reloadBtn').onclick = function () {
+    if (!current || !frames[current.id]) return;
+    $('loading').classList.remove('hide');
+    frames[current.id].src = current.url;
+  };
+  function pop() { if (current) window.open(current.url, '_blank', 'noopener'); }
+  $('popBtn').onclick = pop;
+  $('helpPop').onclick = function (e) { e.preventDefault(); pop(); };
+  $('helpX').onclick = function () { $('help').classList.remove('show'); };
+
+  window.addEventListener('popstate', function () {
+    var id = (location.hash || '').slice(1);
+    if (appById(id)) open(id, false); else goHome(false);
+  });
+
+  // Start where the link points (#appraisals etc.), else on Home.
+  var start = (location.hash || '').slice(1);
+  if (appById(start)) open(start, false);
+
+  // ---- install button (Chrome / Edge / Android) ----
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; $('installBtn').style.display = 'inline-flex'; });
+  $('installBtn').onclick = function () { if (!deferred) return; deferred.prompt(); deferred = null; $('installBtn').style.display = 'none'; };
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () {}); });
+  }
+})();
+</script>
+</body>
+</html>
