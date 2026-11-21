@@ -186,6 +186,7 @@
   // App list. To add or change an app, edit this list only.
   // ------------------------------------------------------------------
   var APPRAISAL = 'https://script.google.com/a/macros/estimateconsultants.com/s/AKfycbyVaMTnlWK4MFOLaBpPoAbIe7Jy4dQr3cCPSPeOGllFTQzkhUiVAKOyc2usnWcTRMRj/exec';
+  var CALCS     = '__CALC_URL__';
   var SHOPS     = 'https://script.google.com/a/macros/estimateconsultants.com/s/AKfycby08jn8NRz--HhQCtssnCUeRNrQl-fZ3UpJoketo1NY_JnmFeey1H4DppnZeSGIaY2pOA/exec';
 
   var I = {
@@ -200,6 +201,7 @@
     globe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>',
     pen:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/></svg>',
     door: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21h16M6 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17"/><circle cx="14.5" cy="12" r=".8" fill="currentColor"/></svg>',
+    chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
     arrow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
     ext:  '<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M9 7h8v8"/></svg>'
   };
@@ -210,7 +212,9 @@
     { id: 'shops', name: 'Shop Office', icon: I.shop, url: SHOPS,
       desc: 'Body shop claims, shop directory, discounts, stage updates and shop invoices.' },
     { id: 'receipts', name: 'Receipts', icon: I.rcpt, url: APPRAISAL + '?app=receipts',
-      desc: 'Scan, review and file business receipts.' }
+      desc: 'Scan, review and file business receipts.' },
+    { id: 'calculators', name: 'Calculator Uses', icon: I.chart, url: CALCS,
+      desc: 'Every use of the website calculators, with notice emails and the follow-up email settings.' }
   ];
 
   var LINKS = [
