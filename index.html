@@ -254,8 +254,13 @@
 
   function appById(id) { for (var i = 0; i < APPS.length; i++) if (APPS[i].id === id) return APPS[i]; return null; }
 
+  // Phones and tablets block Google sign-in inside an embedded frame, which leaves a blank screen,
+  // so there each app opens directly instead of inside the hub.
+  var DIRECT = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
+
   function open(id, push) {
     var a = appById(id); if (!a) return;
+    if (DIRECT) { store('ec_last_app', ''); location.href = a.url; return; }
     current = a;
     body.classList.add('in-app');
     document.title = a.name + ' · EC Team';
@@ -277,7 +282,6 @@
       frames[id] = f;
       $('stage').insertBefore(f, $('loading'));
       f.classList.add('on');
-      helpTimer = setTimeout(function () { if (current && current.id === id) $('help').classList.add('show'); }, 9000);
     } else {
       $('loading').classList.add('hide');
     }
